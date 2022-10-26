@@ -10,6 +10,7 @@ const API_URL = 'http://api.mediastack.com/v1/news?access_key=3f9f96d81b98a96eb5
 const App = () => {
 
     const [noticias, setNoticias] = useState([]);
+    const [busqueda, setBusqueda] = useState([]);
 
     const searchNews = async(keyword) => {
         const result = await fetch(`${API_URL}&keywords=${keyword}`);
@@ -20,12 +21,15 @@ const App = () => {
     }
 
     useEffect(() => {
-        searchNews('data');
     },[])
 
     return (
         <div className='app'>
             <div className="container">
+                <h1 className='head'>Busca tu noticia:</h1>
+                <input type="search" name="keyword" className='searchInput inputs' onChange={((e) => setBusqueda(e.target.value))}/>
+                <input type="submit" value="Buscar" className='inputs' onClick={() => searchNews(busqueda)} />
+
                 {
                     noticias.map((noticia) => {
                         return <New new={noticia} />
